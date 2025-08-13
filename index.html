@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="system">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grossory - Your Global Marketplace</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="respo n.css">
+    <link rel="stylesheet" href="theme.css">
+    <link rel="stylesheet" href="animation.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body>
+    <!-- Loading Screen with Earth Animation -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="earth-container">
+            <div class="earth">
+                <div class="earth-surface"></div>
+                <div class="location-dot" style="--delay: 0s; --x: 20%; --y: 30%;"></div>
+                <div class="location-dot" style="--delay: 0.5s; --x: 60%; --y: 40%;"></div>
+                <div class="location-dot" style="--delay: 1s; --x: 80%; --y: 60%;"></div>
+                <div class="location-dot" style="--delay: 1.5s; --x: 40%; --y: 70%;"></div>
+                <div class="location-dot" style="--delay: 2s; --x: 70%; --y: 20%;"></div>
+            </div>
+            <h2 class="loading-text" data-translate="loading">Loading Grossory...</h2>
+        </div>
+    </div>
+
+    <!-- Main Website Container -->
+    <div id="main-website" class="main-website hidden">
+        <!-- Header -->
+        <header class="header">
+            <div class="container">
+                <div class="header-content">
+                    <div class="logo-section">
+                        <div class="logo">
+                            <i class="fas fa-globe"></i>
+                            <span>Grossory</span>
+                        </div>
+                    </div>
+
+                    <!-- Desktop Navigation -->
+                    <nav class="desktop-nav">
+                        <ul class="nav-list">
+                            <li><a href="#" class="nav-link" data-page="home" data-translate="home">Home</a></li>
+                            <li><a href="#" class="nav-link" data-page="products" data-translate="products">Products</a></li>
+                            <li><a href="#" class="nav-link" data-page="cart" data-translate="cart">Cart</a></li>
+                            <li><a href="#" class="nav-link" data-page="contact" data-translate="contact">Contact</a></li>
+                            <li><a href="#" class="nav-link" data-page="services" data-translate="services">Services</a></li>
+                        </ul>
+                    </nav>
+
+                    <!-- User Actions -->
+                    <div class="user-actions">
+                        <div class="search-container desktop-search">
+                            <input type="text" id="search-input" class="search-input" data-translate-placeholder="search">
+                            <button class="search-btn"><i class="fas fa-search"></i></button>
+                        </div>
+                        
+                        <div class="cart-icon-container">
+                            <button class="cart-btn" data-page="cart">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span class="cart-count">0</span>
+                            </button>
+                        </div>
+
+                        
+                         <div class="language-switcher">
+                            <select id="language-select" class="language-select">
+                                <option value="en">English</option>
+                                <option value="ar">العربية</option>
+                                <option value="ur">اردو</option>
+                                <option value="pt">Português</option>
+                                <option value="tr">Türkçe</option>
+                            </select>
+                        </div>
+
+                     
+
+                        <div class="auth-buttons" id="auth-buttons">
+                            <button class="btn-primary" id="login-btn" data-translate="login">Login</button>
+                            <button class="btn-secondary" id="signup-btn" data-translate="signup">Sign Up</button>
+                        </div>
+
+                        <div class="user-profile hidden" id="user-profile">
+                            <img src="https://via.placeholder.com/40x40" alt="Profile" class="profile-pic" id="header-profile-pic">
+                            <span class="username" id="header-username"></span>
+                        </div>
+
+                        <div class="hamburger-menu">
+                            <button class="hamburger-btn" id="hamburger-btn">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobile-menu">
+            <div class="mobile-menu-content">
+               
+                
+                <nav class="mobile-nav">
+                    <ul class="mobile-nav-list">
+                         <div class="theme-switcher">
+                            <button class="theme-btn">
+                                <i class="fas fa-sun"></i>
+                            </button>
+                        </div>
+                        <li><a href="#" class="mobile-nav-link" data-page="home" data-translate="home">Home</a></li>
+                        <li><a href="#" class="mobile-nav-link" data-page="products" data-translate="products">Products</a></li>
+                        <li><a href="#" class="mobile-nav-link" data-page="cart" data-translate="cart">Cart</a></li>
+                        <li><a href="#" class="mobile-nav-link" data-page="contact" data-translate="contact">Contact</a></li>
+                        <li><a href="#" class="mobile-nav-link" data-page="services" data-translate="services">Services</a></li>
+                        <li><a href="#" class="mobile-nav-link" data-page="profile" data-translate="profile">Profile</a></li>
+                        <li><a href="#" class="mobile-nav-link" data-page="settings" data-translate="settings">Settings</a></li>
+                    </ul>
+                </nav>
+            </div>
+             
+        </div>
+
+        <!-- Bottom Mobile Navigation -->
+        <div class="bottom-nav">
+            <div class="bottom-nav-item" data-page="home">
+                <i class="fas fa-home"></i>
+                <span data-translate="home">Home</span>
+            </div>
+            <div class="bottom-nav-item" data-page="products">
+                <i class="fas fa-box"></i>
+                <span data-translate="products">Products</span>
+            </div>
+            <div class="bottom-nav-item" data-page="cart">
+                <i class="fas fa-shopping-cart"></i>
+                <span data-translate="cart">Cart</span>
+            </div>
+            <div class="bottom-nav-item" data-page="contact">
+                <i class="fas fa-envelope"></i>
+                <span data-translate="contact">Contact</span>
+            </div>
+            <div class="bottom-nav-item" data-page="profile">
+                <img src="https://via.placeholder.com/24x24" alt="Profile" class="bottom-profile-pic" id="bottom-profile-pic">
+                <span data-translate="profile">Profile</span>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Home Page -->
+            <section id="home-page" class="page active">
+                <div class="hero-section">
+                    <div class="container">
+                        <div class="hero-content">
+                            <h1 class="hero-title" data-translate="hero-title">Welcome to Grossory</h1>
+                            <p class="hero-subtitle" data-translate="hero-subtitle">Your Global Marketplace for Everything</p>
+                            <div class="hero-buttons">
+                                <button class="btn-primary" data-page="products" data-translate="shop-now">Shop Now</button>
+                                <button class="btn-secondary" data-page="services" data-translate="learn-more">Learn More</button>
+                            </div>
+                        </div>
+                        <div class="hero-image">
+                            <img src="https://images.pexels.com/photos/4968639/pexels-photo-4968639.jpeg" alt="Hero Image">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="features-section">
+                    <div class="container">
+                        <h2 class="section-title" data-translate="features-title">Why Choose Grossory?</h2>
+                        <div class="features-grid">
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-shipping-fast"></i>
+                                </div>
+                                <h3 data-translate="fast-delivery">Fast Delivery</h3>
+                                <p data-translate="fast-delivery-desc">Get your products delivered quickly and safely</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-shield-alt"></i>
+                                </div>
+                                <h3 data-translate="secure-payment">Secure Payment</h3>
+                                <p data-translate="secure-payment-desc">Safe and secure payment methods</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-headset"></i>
+                                </div>
+                                <h3 data-translate="support">24/7 Support</h3>
+                                <p data-translate="support-desc">Round the clock customer support</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-globe"></i>
+                                </div>
+                                <h3 data-translate="worldwide">Worldwide</h3>
+                                <p data-translate="worldwide-desc">Shipping to over 100 countries</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Products Page -->
+            <section id="products-page" class="page">
+                <div class="container">
+                    <div class="products-header">
+                        <h2 class="page-title" data-translate="our-products">Our Products</h2>
+                        
+                        <div class="mobile-search-container">
+                            <input type="text" class="mobile-search-input" data-translate-placeholder="search" id="mobile-product-search">
+                        </div>
+                    </div>
+
+                    <div class="categories-filter">
+                        <button class="category-btn active" data-category="all" data-translate="all-categories">All Categories</button>
+                        <button class="category-btn" data-category="electronics" data-translate="electronics">Electronics</button>
+                        <button class="category-btn" data-category="clothing" data-translate="clothing">Clothing</button>
+                        <button class="category-btn" data-category="home" data-translate="home-garden">Home & Garden</button>
+                        <button class="category-btn" data-category="sports" data-translate="sports">Sports</button>
+                        <button class="category-btn" data-category="books" data-translate="books">Books</button>
+                    </div>
+
+                    <div class="products-grid" id="products-grid">
+                        <!-- Products will be dynamically loaded -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Product Detail Modal -->
+            <div id="product-modal" class="modal">
+                <div class="modal-content product-detail">
+                    <button class="modal-close"><i class="fas fa-times"></i></button>
+                    <div class="product-detail-content">
+                        <div class="product-images">
+                            <div class="main-image">
+                                <img id="main-product-image" src="" alt="Product">
+                                <div class="zoom-controls">
+                                    <button class="zoom-in"><i class="fas fa-search-plus"></i></button>
+                                    <button class="zoom-out"><i class="fas fa-search-minus"></i></button>
+                                </div>
+                            </div>
+                            <div class="thumbnail-images" id="thumbnail-images">
+                                <!-- Thumbnails will be added dynamically -->
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <h2 id="modal-product-title"></h2>
+                            <div class="product-price">
+                                <span class="current-price" id="modal-product-price"></span>
+                                <span class="original-price" id="modal-original-price"></span>
+                            </div>
+                            <div class="product-rating">
+                                <div class="stars" id="modal-product-rating"></div>
+                                <span class="rating-count" id="modal-rating-count"></span>
+                            </div>
+                            <p class="product-description" id="modal-product-description"></p>
+                            
+                            <div class="product-options">
+                                <div class="option-group">
+                                    <label data-translate="color">Color:</label>
+                                    <div class="color-options" id="color-options">
+                                        <!-- Color options will be added dynamically -->
+                                    </div>
+                                </div>
+                                <div class="option-group">
+                                    <label data-translate="size">Size:</label>
+                                    <select id="size-select" class="size-select">
+                                        <option value="">Select Size</option>
+                                    </select>
+                                </div>
+                                <div class="option-group">
+                                    <label data-translate="quantity">Quantity:</label>
+                                    <div class="quantity-controls">
+                                        <button class="qty-btn minus">-</button>
+                                        <input type="number" class="qty-input" value="1" min="1" max="10">
+                                        <button class="qty-btn plus">+</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="stock-status" id="stock-status">
+                                <span class="in-stock" data-translate="in-stock">In Stock</span>
+                            </div>
+
+                            <div class="product-actions">
+                                <button class="btn-primary add-to-cart-btn" id="modal-add-to-cart" data-translate="add-to-cart">Add to Cart</button>
+                                <button class="btn-secondary buy-now-btn" id="modal-buy-now" data-translate="buy-now">Buy Now</button>
+                            </div>
+
+                            <div class="product-details">
+                                <div class="detail-item">
+                                    <span class="detail-label" data-translate="brand">Brand:</span>
+                                    <span class="detail-value" id="product-brand"></span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label" data-translate="category">Category:</span>
+                                    <span class="detail-value" id="product-category"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cart Page -->
+            <section id="cart-page" class="page">
+                <div class="container">
+                    <h2 class="page-title" data-translate="shopping-cart">Shopping Cart</h2>
+                    <div class="cart-content">
+                        <div class="cart-items" id="cart-items">
+                            <!-- Cart items will be dynamically loaded -->
+                        </div>
+                        <div class="cart-summary">
+                            <div class="summary-card">
+                                <h3 data-translate="order-summary">Order Summary</h3>
+                                <div class="summary-row">
+                                    <span data-translate="subtotal">Subtotal:</span>
+                                    <span id="cart-subtotal">$0.00</span>
+                                </div>
+                                <div class="summary-row">
+                                    <span data-translate="shipping">Shipping:</span>
+                                    <span id="cart-shipping">$5.99</span>
+                                </div>
+                                <div class="summary-row total">
+                                    <span data-translate="total">Total:</span>
+                                    <span id="cart-total">$0.00</span>
+                                </div>
+                                <button class="btn-primary checkout-btn" id="checkout-btn" data-translate="proceed-checkout">Proceed to Checkout</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact Page -->
+            <section id="contact-page" class="page">
+                <div class="container">
+                    <h2 class="page-title" data-translate="contact-us">Contact Us</h2>
+                    <div class="contact-content">
+                        <div class="contact-info">
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div class="contact-details">
+                                    <h4 data-translate="address">Address</h4>
+                                    <p>123 Business Street, City, Country</p>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <div class="contact-details">
+                                    <h4 data-translate="phone">Phone</h4>
+                                    <p>+1 (555) 123-4567</p>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div class="contact-details">
+                                    <h4 data-translate="email">Email</h4>
+                                    <p>info@grossory.com</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <form class="contact-form" id="contact-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <input type="text" name="name" class="form-input" required data-translate-placeholder="your-name">
+                                    <label class="form-label" data-translate="name">Name</label>
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" name="email" class="form-input" required data-translate-placeholder="your-email">
+                                    <label class="form-label" data-translate="email">Email</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="subject" class="form-input" required data-translate-placeholder="subject">
+                                <label class="form-label" data-translate="subject">Subject</label>
+                            </div>
+                            <div class="form-group">
+                                <textarea name="message" class="form-input" rows="5" required data-translate-placeholder="your-message"></textarea>
+                                <label class="form-label" data-translate="message">Message</label>
+                            </div>
+                            <button type="submit" class="btn-primary" data-translate="send-message">Send Message</button>
+                        </form>
+                    </div>
+                    
+                    <div class="map-container">
+                        <div id="contact-map"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Services Page -->
+            <section id="services-page" class="page">
+                <div class="container">
+                    <h2 class="page-title" data-translate="our-services">Our Services</h2>
+                    <div class="services-grid">
+                        <div class="service-card">
+                            <div class="service-icon">
+                                <i class="fas fa-shipping-fast"></i>
+                            </div>
+                            <h3 data-translate="express-delivery">Express Delivery</h3>
+                            <p data-translate="express-delivery-desc">Fast and reliable delivery service worldwide</p>
+                        </div>
+                        <div class="service-card">
+                            <div class="service-icon">
+                                <i class="fas fa-undo-alt"></i>
+                            </div>
+                            <h3 data-translate="easy-returns">Easy Returns</h3>
+                            <p data-translate="easy-returns-desc">Hassle-free return policy within 30 days</p>
+                        </div>
+                        <div class="service-card">
+                            <div class="service-icon">
+                                <i class="fas fa-tools"></i>
+                            </div>
+                            <h3 data-translate="installation">Installation Service</h3>
+                            <p data-translate="installation-desc">Professional installation for electronics and appliances</p>
+                        </div>
+                        <div class="service-card">
+                            <div class="service-icon">
+                                <i class="fas fa-gift"></i>
+                            </div>
+                            <h3 data-translate="gift-wrapping">Gift Wrapping</h3>
+                            <p data-translate="gift-wrapping-desc">Beautiful gift wrapping service available</p>
+                        </div>
+                        <div class="service-card">
+                            <div class="service-icon">
+                                <i class="fas fa-credit-card"></i>
+                            </div>
+                            <h3 data-translate="flexible-payment">Flexible Payment</h3>
+                            <p data-translate="flexible-payment-desc">Multiple payment options and installment plans</p>
+                        </div>
+                        <div class="service-card">
+                            <div class="service-icon">
+                                <i class="fas fa-headset"></i>
+                            </div>
+                            <h3 data-translate="customer-support">Customer Support</h3>
+                            <p data-translate="customer-support-desc">24/7 customer support via chat, email, and phone</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Profile Page -->
+            <section id="profile-page" class="page">
+                <div class="container">
+                    <div class="profile-content">
+                        <div class="profile-header">
+                            <div class="profile-image-container">
+                                <img src="https://via.placeholder.com/120x120" alt="Profile" class="profile-image" id="profile-image">
+                                <button class="change-photo-btn" id="change-photo-btn">
+                                    <i class="fas fa-camera"></i>
+                                </button>
+                                <input type="file" id="photo-input" accept="image/*" style="display: none;">
+                            </div>
+                            <div class="profile-info">
+                                <h2 id="profile-name">User Name</h2>
+                                <p id="profile-email">user@example.com</p>
+                                <p id="profile-member-since">Member since: January 2024</p>
+                            </div>
+                        </div>
+
+                        <div class="profile-tabs">
+                            <button class="tab-btn active" data-tab="personal">Personal Info</button>
+                            <button class="tab-btn" data-tab="orders">Order History</button>
+                            <button class="tab-btn" data-tab="addresses">Addresses</button>
+                        </div>
+
+                        <div class="tab-content">
+                            <div class="tab-panel active" id="personal-tab">
+                                <form class="profile-form" id="profile-form">
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label class="form-label">First Name</label>
+                                            <input type="text" name="firstName" class="form-input" id="first-name" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Last Name</label>
+                                            <input type="text" name="lastName" class="form-input" id="last-name" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Email</label>
+                                        <input type="email" name="email" class="form-input" id="profile-email-input" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Phone</label>
+                                        <input type="tel" name="phone" class="form-input" id="phone">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Date of Birth</label>
+                                        <input type="date" name="dateOfBirth" class="form-input" id="date-of-birth">
+                                    </div>
+                                    <button type="submit" class="btn-primary">Save Changes</button>
+                                </form>
+                            </div>
+
+                            <div class="tab-panel" id="orders-tab">
+                                <div class="orders-list" id="orders-list">
+                                    <!-- Order history will be loaded here -->
+                                </div>
+                            </div>
+
+                            <div class="tab-panel" id="addresses-tab">
+                                <div class="addresses-list" id="addresses-list">
+                                    <!-- Addresses will be loaded here -->
+                                </div>
+                                <button class="btn-primary" id="add-address-btn">Add New Address</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Settings Page -->
+            <section id="settings-page" class="page">
+                <div class="container">
+                    <h2 class="page-title" data-translate="settings">Settings</h2>
+                    <div class="settings-content">
+                        <div class="settings-section">
+                            <h3 data-translate="appearance">Appearance</h3>
+                            <div class="setting-item">
+                                <label data-translate="theme">Theme</label>
+                                <div class="theme-options">
+                                    <button class="theme-option" data-theme="light">
+                                        <i class="fas fa-sun"></i>
+                                        <span data-translate="light">Light</span>
+                                    </button>
+                                    <button class="theme-option" data-theme="dark">
+                                        <i class="fas fa-moon"></i>
+                                        <span data-translate="dark">Dark</span>
+                                    </button>
+                                    <button class="theme-option active" data-theme="system">
+                                        <i class="fas fa-desktop"></i>
+                                        <span data-translate="system">System</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="settings-section">
+                            <h3 data-translate="language">Language</h3>
+                            <div class="setting-item">
+                                <select id="settings-language-select" class="language-select-full">
+                                    <option value="en">English</option>
+                                    <option value="ar">العربية (Arabic)</option>
+                                    <option value="ur">اردو (Urdu)</option>
+                                    <option value="pt">Português (Portuguese)</option>
+                                    <option value="tr">Türkçe (Turkish)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="settings-section">
+                            <h3 data-translate="admin-panel">Admin Panel</h3>
+                            <div class="setting-item">
+                                <button class="btn-secondary" id="admin-access-btn" data-translate="access-admin">Access Admin Panel</button>
+                            </div>
+                        </div>
+
+                        <div class="settings-section">
+                            <h3 data-translate="account">Account</h3>
+                            <div class="setting-item">
+                                <button class="btn-danger" id="logout-btn" data-translate="logout">Logout</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Login Modal -->
+        <div id="login-modal" class="modal">
+            <div class="modal-content auth-modal">
+                <button class="modal-close"><i class="fas fa-times"></i></button>
+                <div class="auth-header">
+                    <h2 data-translate="login">Login</h2>
+                    <p data-translate="login-subtitle">Welcome back to Grossory</p>
+                </div>
+                <form class="auth-form" id="login-form">
+                    <div class="form-group">
+                        <input type="email" name="email" class="form-input" required data-translate-placeholder="email">
+                        <label class="form-label" data-translate="email">Email</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" name="password" class="form-input" required data-translate-placeholder="password">
+                        <label class="form-label" data-translate="password">Password</label>
+                    </div>
+                    <button type="submit" class="btn-primary auth-btn" data-translate="login">Login</button>
+                </form>
+                <div class="auth-switch">
+                    <p data-translate="no-account">Don't have an account?</p>
+                     <button class="auth-switch-btn" data-modal="signup" data-translate="signup">Sign Up</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Signup Modal -->
+        <div id="signup-modal" class="modal">
+            <div class="modal-content auth-modal">
+                <button class="modal-close"><i class="fas fa-times"></i></button>
+                <div class="auth-header">
+                    <h2 data-translate="signup">Sign Up</h2>
+                    <p data-translate="signup-subtitle">Join Grossory today</p>
+                </div>
+                <form class="auth-form" id="signup-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <input type="text" name="firstName" class="form-input" required data-translate-placeholder="first-name">
+                            <label class="form-label" data-translate="">First Name</label>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="lastName" class="form-input" required data-translate-placeholder="last-name">
+                            <label class="form-label" data-translate="">Last Name</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" name="email" class="form-input" required data-translate-placeholder="email">
+                        <label class="form-label" data-translate="">Email</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" name="password" class="form-input" required data-translate-placeholder="password">
+                        <label class="form-label" data-translate="">Password</label>
+                        <div class="password-strength" id="password-strength">
+                            <div class="strength-indicator">
+                                <div class="strength-bar"></div>
+                                <div class="strength-bar"></div>
+                                <div class="strength-bar"></div>
+                                <div class="strength-bar"></div>
+                            </div>
+                            <span class="strength-text" id="strength-text">Easy</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="file-input-label" for="profile-photo" data-translate="profile-photo">Profile Photo (Optional)</label>
+                        <input type="file" name="profilePhoto" id="profile-photo" class="file-input" accept="image/*">
+                        <div class="file-preview" id="file-preview"></div>
+                    </div>
+                    <button type="submit" class="btn-primary auth-btn" data-translate="signup">Sign Up</button>
+                </form>
+                <div class="auth-switch">
+                    <p data-translate="have-account">Already have an account?</p>
+                     <button class="auth-switch-btn" data-modal="login" data-translate="login">Login</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Checkout Modal -->
+        <div id="checkout-modal" class="modal">
+            <div class="modal-content checkout-modal">
+                <button class="modal-close"><i class="fas fa-times"></i></button>
+                <div class="checkout-content">
+                    <h2 data-translate="checkout">Checkout</h2>
+                    <form class="checkout-form" id="checkout-form">
+                        <div class="checkout-section">
+                            <h3 data-translate="shipping-info">Shipping Information</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <input type="text" name="firstName" class="form-input" required data-translate-placeholder="first-name">
+                                    <label class="form-label" data-translate="">First Name</label>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" name="lastName" class="form-input" required data-translate-placeholder="last-name">
+                                    <label class="form-label" data-translate="">Last Name</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" name="email" class="form-input" required data-translate-placeholder="email">
+                                <label class="form-label" data-translate="">Email</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="tel" name="phone" class="form-input" required data-translate-placeholder="phone">
+                                <label class="form-label" data-translate="">Phone Number</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="address" class="form-input" required data-translate-placeholder="address">
+                                <label class="form-label" data-translate="">Address</label>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <input type="text" name="city" class="form-input" required data-translate-placeholder="city">
+                                    <label class="form-label" data-translate="">City</label>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" name="zipCode" class="form-input" required data-translate-placeholder="zip-code">
+                                    <label class="form-label" data-translate="">Zip Code</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="checkout-section">
+                            <h3 data-translate="payment-method">Payment Method</h3>
+                            <div class="payment-methods">
+                                <label class="payment-method">
+                                    <input type="radio" name="paymentMethod" value="card" checked>
+                                    <span class="payment-method-label">
+                                        <i class="fas fa-credit-card"></i>
+                                        <span data-translate="credit-card">Credit Card</span>
+                                    </span>
+                                </label>
+                                <label class="payment-method">
+                                    <input type="radio" name="paymentMethod" value="paypal">
+                                    <span class="payment-method-label">
+                                        <i class="fab fa-paypal"></i>
+                                        <span>PayPal</span>
+                                    </span>
+                                </label>
+                                <label class="payment-method">
+                                    <input type="radio" name="paymentMethod" value="cod">
+                                    <span class="payment-method-label">
+                                        <i class="fas fa-money-bill-wave"></i>
+                                        <span data-translate="cash-on-delivery">Cash on Delivery</span>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="checkout-summary">
+                            <h3 data-translate="order-summary">Order Summary</h3>
+                            <div class="summary-items" id="checkout-items">
+                                <!-- Order items will be displayed here -->
+                            </div>
+                            <div class="summary-total">
+                                <span data-translate="total">Total: </span>
+                                <span id="checkout-total">$0.00</span>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-primary checkout-btn" data-translate="place-order">Place Order</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Modal -->
+        <div id="admin-modal" class="modal">
+            <div class="modal-content admin-modal">
+                <button class="modal-close"><i class="fas fa-times"></i></button>
+                <div class="admin-login" id="admin-login">
+                    <div class="admin-header">
+                        <h2 data-translate="admin-access">Admin Access</h2>
+                        <p data-translate="admin-login-subtitle">Enter admin credentials</p>
+                    </div>
+                    <form class="admin-login-form" id="admin-login-form">
+                        <div class="form-group">
+                            <input type="text" name="username" class="form-input" required placeholder="Admin Username">
+                            <label class="form-label">Username</label>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" name="password" class="form-input" required placeholder="Admin Password">
+                            <label class="form-label">Password</label>
+                        </div>
+                        <button type="submit" class="btn-primary" data-translate="login">Login</button>
+                    </form>
+                </div>
+
+                <div class="admin-panel hidden" id="admin-panel">
+                    <div class="admin-header">
+                        <h2 data-translate="admin-panel">Admin Panel</h2>
+                        <div class="admin-creator">
+                            <p><strong>Creator:</strong> Muhammad Ali</p>
+                        </div>
+                    </div>
+
+                    <div class="admin-tabs">
+                        <button class="admin-tab-btn active" data-tab="dashboard">Dashboard</button>
+                        <button class="admin-tab-btn" data-tab="products">Products</button>
+                        <button class="admin-tab-btn" data-tab="users">Users</button>
+                        <button class="admin-tab-btn" data-tab="orders">Orders</button>
+                        <button class="admin-tab-btn" data-tab="profile">Creator Profile</button>
+                    </div>
+
+                    <div class="admin-content">
+                        <div class="admin-tab-panel active" id="dashboard-tab">
+                            <div class="dashboard-stats">
+                                <div class="stat-card">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-users"></i>
+                                    </div>
+                                    <div class="stat-info">
+                                        <h3 id="total-users">0</h3>
+                                        <p>Total Users</p>
+                                    </div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-box"></i>
+                                    </div>
+                                    <div class="stat-info">
+                                        <h3 id="total-products">0</h3>
+                                        <p>Total Products</p>
+                                    </div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </div>
+                                    <div class="stat-info">
+                                        <h3 id="total-orders">0</h3>
+                                        <p>Total Orders</p>
+                                    </div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-dollar-sign"></i>
+                                    </div>
+                                    <div class="stat-info">
+                                        <h3 id="total-revenue">$0</h3>
+                                        <p>Total Revenue</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="admin-tab-panel" id="products-tab">
+                            <div class="admin-section-header">
+                                <h3>Product Management</h3>
+                                <button class="btn-primary" id="add-product-btn">Add New Product</button>
+                            </div>
+                            <div class="admin-table-container">
+                                <table class="admin-table" id="products-table">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Name</th>
+                                            <th>Category</th>
+                                            <th>Price</th>
+                                            <th>Stock</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Product rows will be added dynamically -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="admin-tab-panel" id="users-tab">
+                            <div class="admin-section-header">
+                                <h3>User Management</h3>
+                            </div>
+                            <div class="admin-table-container">
+                                <table class="admin-table" id="users-table">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Registration Date</th>
+                                            <th>Last Login</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- User rows will be added dynamically -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="admin-tab-panel" id="orders-tab">
+                            <div class="admin-section-header">
+                                <h3>Order Management</h3>
+                            </div>
+                            <div class="admin-table-container">
+                                <table class="admin-table" id="orders-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Order ID</th>
+                                            <th>Customer</th>
+                                            <th>Date</th>
+                                            <th>Total</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Order rows will be added dynamically -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="admin-tab-panel" id="profile-tab">
+                            <div class="creator-profile">
+                                <div class="creator-info">
+                                    <img src="https://via.placeholder.com/150x150" alt="Creator" class="creator-avatar">
+                                    <div class="creator-details">
+                                        <h3>Muhammad Ali</h3>
+                                        <p>Full Stack Developer</p>
+                                        <p>Creator of Grossory E-commerce Platform</p>
+                                        <div class="creator-contact">
+                                            <p><i class="fas fa-envelope"></i> muhammadali@grossory.com</p>
+                                            <p><i class="fas fa-phone"></i> +92 300 1234567</p>
+                                            <p><i class="fas fa-map-marker-alt"></i> Pakistan</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="creator-skills">
+                                    <h4>Skills & Technologies</h4>
+                                    <div class="skills-list">
+                                        <span class="skill-tag">HTML/CSS</span>
+                                        <span class="skill-tag">JavaScript</span>
+                                        <span class="skill-tag">React</span>
+                                        <span class="skill-tag">Node.js</span>
+                                        <span class="skill-tag">Firebase</span>
+                                        <span class="skill-tag">UI/UX Design</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Product Modal -->
+        <div id="add-product-modal" class="modal">
+            <div class="modal-content">
+                <button class="modal-close"><i class="fas fa-times"></i></button>
+                <h2>Add New Product</h2>
+                <form class="add-product-form" id="add-product-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <input type="text" name="name" class="form-input" required placeholder="Product Name">
+                            <label class="form-label">Product Name</label>
+                        </div>
+                        <div class="form-group">
+                            <select name="category" class="form-input" required>
+                                <option value="">Select Category</option>
+                                <option value="electronics">Electronics</option>
+                                <option value="clothing">Clothing</option>
+                                <option value="home">Home & Garden</option>
+                                <option value="sports">Sports</option>
+                                <option value="books">Books</option>
+                            </select>
+                            <label class="form-label">Category</label>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <input type="number" name="price" class="form-input" required placeholder="Price">
+                            <label class="form-label">Price ($)</label>
+                        </div>
+                        <div class="form-group">
+                            <input type="number" name="stock" class="form-input" required placeholder="Stock">
+                            <label class="form-label">Stock Quantity</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="brand" class="form-input" required placeholder="Brand">
+                        <label class="form-label">Brand</label>
+                    </div>
+                    <div class="form-group">
+                        <textarea name="description" class="form-input" required placeholder="Product Description"></textarea>
+                        <label class="form-label">Description</label>
+                    </div>
+                    <div class="form-group">
+                        <label class="file-input-label">Product Images</label>
+                        <input type="file" name="images" class="file-input" multiple accept="image/*">
+                    </div>
+                    <button type="submit" class="btn-primary">Add Product</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Notification Container -->
+        <div id="notifications" class="notifications"></div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="trans.js"></script>
+    <script src="product.js"></script>
+    <script src="cart.js"></script>
+    <script src="auth.js"></script>
+    <script src="admin.js"></script>
+    <script src="firebase.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
