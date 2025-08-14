@@ -576,3 +576,38 @@ if (typeof module !== 'undefined' && module.exports) {
 } else if (typeof window !== 'undefined') {
     window.PageManager = PageManager;
 }
+
+/* Add this JavaScript to create floating particles */
+document.addEventListener('DOMContentLoaded', function() {
+    const header = document.querySelector('.header');
+    for (let i = 0; i < 15; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('light-particle');
+        particle.style.left = `${Math.random() * 100}%`;
+        particle.style.top = `${Math.random() * 100}%`;
+        particle.style.animationDuration = `${Math.random() * 10 + 5}s`;
+        particle.style.animationDelay = `${Math.random() * 5}s`;
+        header.appendChild(particle);
+    }
+});
+document.querySelectorAll('.add-to-cart-btn, .buy-now-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        this.classList.add('loading');
+        // Remove loading class after your async operation completes
+        // setTimeout(() => this.classList.remove('loading'), 2000);
+    });
+});
+
+/* Add this JavaScript for mouse tracking effect */
+document.querySelectorAll('.product-card').forEach(card => {
+    card.addEventListener('mousemove', function(e) {
+        const rect = this.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        this.style.setProperty('--mouse-x', `${x}px`);
+        this.style.setProperty('--mouse-y', `${y}px`);
+    });
+});
+document.querySelectorAll('.star').forEach((star, index) => {
+    star.style.setProperty('--star-index', index);
+});

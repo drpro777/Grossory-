@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <title>Grossory - Your Global Marketplace</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="respo n.css">
@@ -11,6 +12,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </head>
 <body>
@@ -67,7 +69,11 @@
                             </button>
                         </div>
 
-                        
+                        <div class="theme-switcher">
+                            <button class="theme-btn">
+                                <i class="fas fa-sun"></i>
+                            </button>
+                        </div>
                          <div class="language-switcher">
                             <select id="language-select" class="language-select">
                                 <option value="en">English</option>
@@ -77,6 +83,8 @@
                                 <option value="tr">Türkçe</option>
                             </select>
                         </div>
+                        
+
 
                      
 
@@ -109,11 +117,7 @@
                 
                 <nav class="mobile-nav">
                     <ul class="mobile-nav-list">
-                         <div class="theme-switcher">
-                            <button class="theme-btn">
-                                <i class="fas fa-sun"></i>
-                            </button>
-                        </div>
+                         
                         <li><a href="#" class="mobile-nav-link" data-page="home" data-translate="home">Home</a></li>
                         <li><a href="#" class="mobile-nav-link" data-page="products" data-translate="products">Products</a></li>
                         <li><a href="#" class="mobile-nav-link" data-page="cart" data-translate="cart">Cart</a></li>
@@ -155,22 +159,40 @@
         <main class="main-content">
             <!-- Home Page -->
             <section id="home-page" class="page active">
-                <div class="hero-section">
-                    <div class="container">
-                        <div class="hero-content">
-                            <h1 class="hero-title" data-translate="hero-title">Welcome to Grossory</h1>
-                            <p class="hero-subtitle" data-translate="hero-subtitle">Your Global Marketplace for Everything</p>
-                            <div class="hero-buttons">
-                                <button class="btn-primary" data-page="products" data-translate="shop-now">Shop Now</button>
-                                <button class="btn-secondary" data-page="services" data-translate="learn-more">Learn More</button>
-                            </div>
-                        </div>
-                        <div class="hero-image">
-                            <img src="https://images.pexels.com/photos/4968639/pexels-photo-4968639.jpeg" alt="Hero Image">
-                        </div>
-                    </div>
+            
+<section class="hero-section">
+    <div class="grocery-floaters">
+        <div class="grocery-floater apple"></div>
+        <div class="grocery-floater banana"></div>
+        <div class="grocery-floater leaf"></div>
+        <div class="grocery-floater carrot"></div>
+    </div>
+    
+    <div class="hero-content container">
+        <div class="hero-text">
+            <h1 class="hero-title">
+                <span data-text="Fresh">Fresh</span> 
+                <span data-text="Grocery">Grocery</span> 
+                <span data-text="Deliveries">Deliveries</span>
+            </h1>
+            <p class="hero-subtitle">
+                Farm-fresh produce delivered to your doorstep within hours
+            </p>
+            <div class="hero-buttons">
+                <button class="btn-primary" data-page="products" data-translate="shop-now">Shop Now</button>
+                <button class="btn-secondary" data-page="services" data-translate="learn-more">Learn More</button>
+            </div>
+        </div>
+        
+        <div class="hero-image">
+            <div class="hero-image-container">
+                <div class="hero-image-inner">
+                    <img src="https://lh3.googleusercontent.com/0kpVATY98fx_2MhyHDxFbN7QtsZ_0PxDGfzI5fN9q1YmraScn2kALkq8sDOWv16kIy9-twa6C1MbQGxtkmDnirfbr8UOyqQ4J7dPbKc=w400-rw" alt="Fresh Groceries">
                 </div>
-
+            </div>
+        </div>
+    </div>
+</section>
                 <div class="features-section">
                     <div class="container">
                         <h2 class="section-title" data-translate="features-title">Why Choose Grossory?</h2>
@@ -229,6 +251,7 @@
                     </div>
 
                     <div class="products-grid" id="products-grid">
+                        
                         <!-- Products will be dynamically loaded -->
                     </div>
                 </div>
@@ -291,8 +314,8 @@
                             </div>
 
                             <div class="product-actions">
-                                <button class="btn-primary add-to-cart-btn" id="modal-add-to-cart" data-translate="add-to-cart">Add to Cart</button>
-                                <button class="btn-secondary buy-now-btn" id="modal-buy-now" data-translate="buy-now">Buy Now</button>
+                                <button class="add-to-cart-btn" id="modal-add-to-cart" data-translate="add-to-cart">Add to Cart</button>
+                                <button class=" buy-now-btn" id="modal-buy-now" data-translate="buy-now">Buy Now</button>
                             </div>
 
                             <div class="product-details">
@@ -605,6 +628,7 @@
                 <div class="auth-switch">
                     <p data-translate="no-account">Don't have an account?</p>
                      <button class="auth-switch-btn" data-modal="signup" data-translate="signup">Sign Up</button>
+                     
                 </div>
             </div>
         </div>
